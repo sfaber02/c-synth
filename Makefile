@@ -1,8 +1,15 @@
-main: ./src/main.cpp
-	g++ -o ./build/main ./src/main.cpp  
+all: main
 
-globals: ./src/globals.cpp
-	g++ -o ./build/globals ./src/globals.cpp  
+main: main.o globals.o Oscillator.o
+	g++ -o ./build/main ./build/main.o ./build/globals.o ./build/Oscillator.o 
 
-Oscillator: ./src/Oscillator/Oscillator.cpp
-	g++ -o ./build/Oscillator ./src/Oscillator/Oscillator.cpp  
+globals.o: 
+	g++ -c ./src/globals.cpp -o ./build/globals.o
+
+Oscillator.o:
+	g++ -c ./src/Oscillator/Oscillator.cpp -o ./build/Oscillator.o
+
+main.o:
+	g++ -c ./src/main.cpp -o ./build/main.o
+
+

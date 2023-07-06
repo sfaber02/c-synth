@@ -8,4 +8,6 @@ int main () {
 
     Oscillator osc = Oscillator(440, SINE);
 
+    std::cout << "osc = " << osc.getSample() << std::endl;
+
 }

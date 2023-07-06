@@ -3,7 +3,7 @@
 #include <cmath>
 
 
-Oscillator:: Oscillator(int frequency, WAVEFORM waveform) {
+Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
     phase = 0.0;
     phaseIncrement = frequencyToPhaseIncrement(frequency);
 };
