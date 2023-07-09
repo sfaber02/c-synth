@@ -12,18 +12,18 @@ tuple<int*, int> ToneGenerator::generateTone(
     const int amplitude, 
     Oscillator osc) 
     {
-        cout << "**** NEW TONE GEN ******" << endl;
+        // cout << "**** NEW TONE GEN ******" << endl;
         int length = duration * SAMPLE_RATE * 2;
 
         int* tone = new int[length];
         
         for (int index = 0; index < length; index++) {
-            cout << "index = " << index << endl;
+            // cout << "index = " << index << endl;
             double sample = osc.getSample() * amplitude;
-            cout << "sample = " << sample << endl;
+            // cout << "sample = " << sample << endl;
             *(tone + index) = sample;
             tone[index] = sample;
-            cout << "array entry = " << *(tone + index) << endl;
+            // cout << "array entry = " << *(tone + index) << endl;
         }
 
         return make_tuple(tone, length);

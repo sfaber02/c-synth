@@ -30,10 +30,10 @@ double Oscillator::getSample() {
     double sample;
 
     sample = sin(phase);
-    cout << "get sample called. Phase = " << phase << " sin(phase) = " << sample << endl;
+    // cout << "get sample called. Phase = " << phase << " sin(phase) = " << sample << endl;
     
     switch (waveform) {
-        case WAVEFORM::SINE:
+        case SINE:
             cout << "Success!!!";
             sample = sin(phase);
             break;
