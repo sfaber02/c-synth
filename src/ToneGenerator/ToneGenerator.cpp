@@ -2,6 +2,7 @@
 #include "./ToneGenerator.h"
 #include "../Oscillator/Oscillator.h"
 #include <tuple>
+#include <iostream>
 
 using namespace std;
 
@@ -9,14 +10,20 @@ tuple<int*, int> ToneGenerator::generateTone(
     const double duration, 
     const double frequency, 
     const int amplitude, 
-    WAVEFORM waveform,
     Oscillator osc) 
     {
+        cout << "**** NEW TONE GEN ******" << endl;
         int length = duration * SAMPLE_RATE * 2;
-        int*  tone = new int[length];
+
+        int* tone = new int[length];
         
         for (int index = 0; index < length; index++) {
-            tone[index] = osc.getSample();
+            cout << "index = " << index << endl;
+            double sample = osc.getSample() * amplitude;
+            cout << "sample = " << sample << endl;
+            *(tone + index) = sample;
+            tone[index] = sample;
+            cout << "array entry = " << *(tone + index) << endl;
         }
 
         return make_tuple(tone, length);
