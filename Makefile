@@ -1,15 +1,18 @@
 all: main
 
-main: main.o globals.o Oscillator.o
-	g++ -o ./build/main ./build/main.o ./build/globals.o ./build/Oscillator.o 
+main: main.o globals.o Oscillator.o ToneGenerator.o
+	g++ -std=c++11 -o ./build/main ./build/main.o ./build/globals.o ./build/Oscillator.o ./build/ToneGenerator.o
 
 globals.o: 
-	g++ -c ./src/globals.cpp -o ./build/globals.o
+	g++ -std=c++11 -c ./src/globals.cpp -o ./build/globals.o
 
 Oscillator.o:
-	g++ -c ./src/Oscillator/Oscillator.cpp -o ./build/Oscillator.o
+	g++ -std=c++11 -c ./src/Oscillator/Oscillator.cpp -o ./build/Oscillator.o
+
+ToneGenerator.o:
+	g++ -std=c++11 -c ./src/ToneGenerator/ToneGenerator.cpp -o ./build/ToneGenerator.o
 
 main.o:
-	g++ -c ./src/main.cpp -o ./build/main.o
+	g++ -std=c++11 -c ./src/main.cpp -o ./build/main.o
 
 
