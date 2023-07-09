@@ -8,7 +8,7 @@ class Oscillator {
     private:
         double phase;
         double phaseIncrement;
-        WAVEFORM waveform;
+        WAVEFORM wf;
         double frequencyToPhaseIncrement(int);
 
     public:

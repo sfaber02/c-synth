@@ -11,6 +11,7 @@ Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
     cout << "SINE = " << WAVEFORM::SINE << endl;
     phase = 0.0;
     phaseIncrement = frequencyToPhaseIncrement(frequency);
+    wf = waveform;
     cout << "Phase Increment = " << phaseIncrement << endl;
 
     bool checkWaveform = false;
@@ -28,13 +29,10 @@ double Oscillator::frequencyToPhaseIncrement(int frequency) {
 
 double Oscillator::getSample() {
     double sample;
-
-    sample = sin(phase);
     // cout << "get sample called. Phase = " << phase << " sin(phase) = " << sample << endl;
     
-    switch (waveform) {
+    switch (wf) {
         case SINE:
-            cout << "Success!!!";
             sample = sin(phase);
             break;
         default:
