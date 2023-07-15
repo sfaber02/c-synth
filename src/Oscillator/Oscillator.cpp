@@ -13,14 +13,6 @@ Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
     phaseIncrement = frequencyToPhaseIncrement(frequency);
     wf = waveform;
     cout << "Phase Increment = " << phaseIncrement << endl;
-
-    bool checkWaveform = false;
-    if (waveform == WAVEFORM::SINE) {
-        checkWaveform = true;
-    }   
-    // cout << "waveform = SINE? " << checkWaveform << endl;
-    cout << "waveform = SINE? " << true << endl;
-
 };
 
 double Oscillator::frequencyToPhaseIncrement(int frequency) {
