@@ -1,0 +1,7 @@
+#ifndef JUCE_APP_CONFIG_HEADER
+#define JUCE_APP_CONFIG_HEADER
+
+constexpr int JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED = 1;
+constexpr int NDEBUG = 1;
+
+#endif
