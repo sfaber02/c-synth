@@ -34,6 +34,8 @@
     - Either JUCE_INTEL or JUCE_ARM
     - Either JUCE_GCC or JUCE_CLANG or JUCE_MSVC
 */
+#define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED = 1
+#define NDEBUG = 1
 
 //==============================================================================
 #ifdef JUCE_APP_CONFIG_HEADER
