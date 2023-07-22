@@ -3,9 +3,7 @@
 #include <tuple>
 #include "./Oscillator/Oscillator.h"
 #include "./ToneGenerator/ToneGenerator.h"
-#include "./juce_config.h"
-#include "/Users/shawn/dev/synth-c/src/n_debug.h"
-#include "../external-lib/juce_core/juce_core.h"
+#include "../JUCE/modules/JuceHeader.h"
 
 using namespace std;
 
