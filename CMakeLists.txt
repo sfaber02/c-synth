@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(C+Synth VERSION 0.1)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(./JUCE)
@@ -29,6 +29,7 @@ target_link_libraries(${PROJECT_NAME}
         ToneGenerator
         # ConsoleAppData            # If you'd created a binary data target, you'd link to it here
         juce::juce_core
+        juce::juce_audio_devices
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_warning_flags)
