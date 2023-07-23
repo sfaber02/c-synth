@@ -3,7 +3,7 @@
 #include <tuple>
 #include "./Oscillator/Oscillator.h"
 #include "./ToneGenerator/ToneGenerator.h"
-#include "../JUCE/modules/JuceHeader.h"
+#include <juce_core/juce_core.h>
 
 using namespace std;
 
