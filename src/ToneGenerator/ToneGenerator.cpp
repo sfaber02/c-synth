@@ -13,9 +13,9 @@ tuple<float*, int> ToneGenerator::generateTone(
     const int amplitude, 
     Oscillator osc) 
     {
-        cout << "****** NEW TONE GEN ******" << endl;
+        // cout << "****** NEW TONE GEN ******" << endl;
         int length = duration * SAMPLE_RATE * 2;
-        cout << "length=" << length <<  endl;
+        // cout << "length=" << length <<  endl;
 
 
 

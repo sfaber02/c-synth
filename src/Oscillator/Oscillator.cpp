@@ -7,12 +7,12 @@
 using namespace std;
 
 Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
-    cout << "Oscillator created. " << frequency << "hz, " << waveform << endl;
-    cout << "SINE = " << WAVEFORM::SINE << endl;
+    // cout << "Oscillator created. " << frequency << "hz, " << waveform << endl;
+    // cout << "SINE = " << WAVEFORM::SINE << endl;
     phase = 0.0;
     phaseIncrement = frequencyToPhaseIncrement(frequency);
     wf = waveform;
-    cout << "Phase Increment = " << phaseIncrement << endl;
+    // cout << "Phase Increment = " << phaseIncrement << endl;
 };
 
 double Oscillator::frequencyToPhaseIncrement(int frequency) {

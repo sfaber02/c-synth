@@ -25,6 +25,8 @@ using namespace juce;
 class MyAudioCallback : public juce::AudioIODeviceCallback
 {
 public:
+    int currentPosition = 0;
+
     void audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
                                           int numInputChannels,
                                           float *const *outputChannelData,
@@ -33,7 +35,7 @@ public:
                                           const AudioIODeviceCallbackContext &context) override
     {
         
-        cout << "We're in the overidden function!!!!" << endl;
+        // cout << "We're in the overidden function!!!!" << endl;
         // Fill the outputChannelData with audio data for each output channel
         // You can generate audio here, process audio from input, or mix multiple tracks.
         // OutputChannelData[channelIndex][sampleIndex]
@@ -50,13 +52,25 @@ public:
         {
             for (int channel = 0; channel < numOutputChannels; ++channel)
             {
-                if (outputChannelData[channel] != nullptr)
+                // Get a pointer to the output channel data
+                float *outputChannel = outputChannelData[channel];
+                int samplesRemaining = numSamples;
+                while (samplesRemaining > 0)
                 {
-                    for (int sample = 0; sample < numSamples; ++sample)
-                    {
-                        outputChannelData[channel][sample] = tone[sample];
-                        // cout << "SAMPLE = " << tone[sample % length] << endl;
-                    }
+                    // Calculate the number of samples to copy in this iteration
+                    int samplesToCopy = std::min(samplesRemaining, length - currentPosition);
+
+                    // Copy the samples from the audio array to the output buffer
+                    std::memcpy(outputChannel, tone + currentPosition, samplesToCopy * sizeof(float));
+
+                    // Update the current position and wrap around if needed
+                    currentPosition += samplesToCopy;
+
+                    // Update the number of remaining samples to copy
+                    samplesRemaining -= samplesToCopy;
+
+                    // Move the output buffer pointer to the next position
+                    outputChannel += samplesToCopy;
                 }
             }
         }
@@ -92,11 +106,11 @@ int main () {
     cout << "audioData" << &audioData << endl;
 
     // print some samples
-    cout << "tone array size = " << length << endl;
-    for (int index = 0; index < 200; index++) {
-         cout << *(tone + index) << ",";    
-    }
-    cout << "audio data" << *(audioData)[0] << ",";    
+    // cout << "tone array size = " << length << endl;
+    // for (int index = 0; index < 200; index++) {
+    //      cout << *(tone + index) << ",";    
+    // }
+    // cout << "audio data" << *(audioData)[0] << ",";    
 
 
     // create audio device manager
