@@ -7,16 +7,19 @@
 
 using namespace std;
 
-tuple<int*, int> ToneGenerator::generateTone(
+tuple<float*, int> ToneGenerator::generateTone(
     const double duration, 
     const double frequency, 
     const int amplitude, 
     Oscillator osc) 
     {
-        // cout << "****** NEW TONE GEN ******" << endl;
+        cout << "****** NEW TONE GEN ******" << endl;
         int length = duration * SAMPLE_RATE * 2;
+        cout << "length=" << length <<  endl;
 
-        int* tone = new int[length];
+
+
+        float* tone = new float[length];
         
         for (int index = 0; index < length; index++) {
             // cout << "index = " << index << endl;

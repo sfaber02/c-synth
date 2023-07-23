@@ -3,5 +3,5 @@
 
 class ToneGenerator {
     public:
-        std::tuple<int*, int> generateTone(double, double, int, Oscillator);
+        std::tuple<float*, int> generateTone(double, double, int, Oscillator);
 };
