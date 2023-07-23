@@ -32,19 +32,45 @@ public:
                                           int numSamples,
                                           const AudioIODeviceCallbackContext &context) override
     {
+        
         cout << "We're in the overidden function!!!!" << endl;
         // Fill the outputChannelData with audio data for each output channel
         // You can generate audio here, process audio from input, or mix multiple tracks.
         // OutputChannelData[channelIndex][sampleIndex]
+        Oscillator osc = Oscillator(440, WAVEFORM::SINE);
+        ToneGenerator toneGenerator;
+        tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
+        int length = get<1>(toneTuple);
+        float *tone = get<0>(toneTuple);
+        // inputChannelData = new const float *{tone};
+        // float *const *outputChannelData = new float *{};
+
+        // some chat gpt insanity
+        if (numOutputChannels > 0)
+        {
+            for (int channel = 0; channel < numOutputChannels; ++channel)
+            {
+                if (outputChannelData[channel] != nullptr)
+                {
+                    for (int sample = 0; sample < numSamples; ++sample)
+                    {
+                        outputChannelData[channel][sample] = tone[sample % length];
+                        // cout << "SAMPLE = " << tone[sample % length] << endl;
+                    }
+                }
+            }
+        }
     }
 
     void audioDeviceAboutToStart(juce::AudioIODevice *device) override
     {
+        cout << "AUDIO DEVICE IS ABOUT TO START" << endl;
         // Called when the audio device is about to start.
     }
 
     void audioDeviceStopped() override
     {
+        cout << "STOPPING AUDIO DEVICE" << endl;
         // Called when the audio device has stopped.
     }
 };
@@ -100,6 +126,8 @@ int main () {
 
     MyAudioCallback myAudioCallBack = MyAudioCallback();
     audioDeviceManager.addAudioCallback(&myAudioCallBack);
+    // audioDevice->start(&myAudioCallBack);
+    cout << "Is playing ? " << audioDevice->isPlaying() << endl;
 
     // AudioIODeviceCallbackContext context;
     // try  {
@@ -117,7 +145,7 @@ int main () {
 
 
     audioDevice->close();
-    cout << "Audio device open? " << audioDevice->isOpen() << endl;
+    cout << "Audio device open:  " << audioDevice->isOpen() << endl;
 
     delete[] tone;
 
