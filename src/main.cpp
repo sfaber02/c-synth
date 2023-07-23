@@ -42,10 +42,10 @@ public:
         tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
         int length = get<1>(toneTuple);
         float *tone = get<0>(toneTuple);
-        // inputChannelData = new const float *{tone};
+        // outputChannelData[0] = *tone;
         // float *const *outputChannelData = new float *{};
 
-        // some chat gpt insanity
+        // // some chat gpt insanity
         if (numOutputChannels > 0)
         {
             for (int channel = 0; channel < numOutputChannels; ++channel)
@@ -54,7 +54,7 @@ public:
                 {
                     for (int sample = 0; sample < numSamples; ++sample)
                     {
-                        outputChannelData[channel][sample] = tone[sample % length];
+                        outputChannelData[channel][sample] = tone[sample];
                         // cout << "SAMPLE = " << tone[sample % length] << endl;
                     }
                 }
@@ -126,7 +126,7 @@ int main () {
 
     MyAudioCallback myAudioCallBack = MyAudioCallback();
     audioDeviceManager.addAudioCallback(&myAudioCallBack);
-    // audioDevice->start(&myAudioCallBack);
+    audioDevice->start(&myAudioCallBack);
     cout << "Is playing ? " << audioDevice->isPlaying() << endl;
 
     // AudioIODeviceCallbackContext context;
@@ -142,7 +142,7 @@ int main () {
     //     cout << "exception on adding callback" << endl;
     // }
 
-
+    std::cin.get();
 
     audioDevice->close();
     cout << "Audio device open:  " << audioDevice->isOpen() << endl;
