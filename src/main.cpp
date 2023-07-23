@@ -10,18 +10,46 @@
 
 using namespace juce;
 
-// void audioCallBack(const float **inputArray, int inChannels, float **outputArray, int outChannels, int numSamples) {
-void audioCallBack(const float *const *inputChannelData,
-                   int totalNumInputChannels,
-                   float *const *outputChannelData,
-                   int totalNumOutputChannels,
-                   int numSamples,
-                   const AudioIODeviceCallbackContext &context){
+// // void audioCallBack(const float **inputArray, int inChannels, float **outputArray, int outChannels, int numSamples) {
+// void audioCallBack(const float *const *inputChannelData,
+//                    int totalNumInputChannels,
+//                    float *const *outputChannelData,
+//                    int totalNumOutputChannels,
+//                    int numSamples,
+//                    const AudioIODeviceCallbackContext &context){
 
+// };
+
+#ifndef MYAUDIOCALLBACK_H_INCLUDED
+#define MYAUDIOCALLBACK_H_INCLUDED
+class MyAudioCallback : public juce::AudioIODeviceCallback
+{
+public:
+    void audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
+                                          int numInputChannels,
+                                          float *const *outputChannelData,
+                                          int numOutputChannels,
+                                          int numSamples,
+                                          const AudioIODeviceCallbackContext &context) override
+    {
+        cout << "We're in the overidden function!!!!" << endl;
+        // Fill the outputChannelData with audio data for each output channel
+        // You can generate audio here, process audio from input, or mix multiple tracks.
+        // OutputChannelData[channelIndex][sampleIndex]
+    }
+
+    void audioDeviceAboutToStart(juce::AudioIODevice *device) override
+    {
+        // Called when the audio device is about to start.
+    }
+
+    void audioDeviceStopped() override
+    {
+        // Called when the audio device has stopped.
+    }
 };
 
-
-
+#endif
 
 int main () {
     cout << "sample rate = " << SAMPLE_RATE <<  endl;
@@ -35,10 +63,14 @@ int main () {
     const float* const* audioData = new const float*{tone};
     float *const *outputChannelData = new float*{};
 
+    cout << "audioData" << &audioData << endl;
+
     // print some samples
+    cout << "tone array size = " << length << endl;
     for (int index = 0; index < 200; index++) {
          cout << *(tone + index) << ",";    
     }
+    cout << "audio data" << *(audioData)[0] << ",";    
 
 
     // create audio device manager
@@ -63,14 +95,24 @@ int main () {
 
 
     
-    AudioIODeviceCallback* audioIODeviceCallback;
-    AudioIODeviceCallbackContext context;
-    try  {
-        audioIODeviceCallback->audioDeviceIOCallbackWithContext(audioData, 1, outputChannelData, 0, 512.0, context);
-    } catch () {
+    // AudioIODeviceCallback* audioIODeviceCallback;
 
-    }
-    audioDeviceManager.addAudioCallback(audioIODeviceCallback);
+
+    MyAudioCallback myAudioCallBack = MyAudioCallback();
+    audioDeviceManager.addAudioCallback(&myAudioCallBack);
+
+    // AudioIODeviceCallbackContext context;
+    // try  {
+    //     audioIODeviceCallback->audioDeviceIOCallbackWithContext(audioData, 1, outputChannelData, 0, 512.0, context);
+    // } catch (const char *msg) {
+    //     cout << "exception = " << endl;
+    // }
+
+    // try {
+    //     
+    // } catch (const char *msg) {
+    //     cout << "exception on adding callback" << endl;
+    // }
 
 
 
