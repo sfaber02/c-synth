@@ -34,7 +34,7 @@ public:
                                           int numSamples,
                                           const AudioIODeviceCallbackContext &context) override
     {
-        
+        cout <<  "current Position = " << currentPosition << endl;
         // cout << "We're in the overidden function!!!!" << endl;
         // Fill the outputChannelData with audio data for each output channel
         // You can generate audio here, process audio from input, or mix multiple tracks.

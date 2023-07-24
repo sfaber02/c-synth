@@ -14,7 +14,6 @@ class Oscillator {
     public:
         Oscillator(int, WAVEFORM);
         double getSample();
-
 };
 
 #endif
