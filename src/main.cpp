@@ -25,18 +25,11 @@ using namespace juce;
 class MyAudioCallback : public juce::AudioIODeviceCallback
 {
 public:
-    int currentPosition = 0;
-    int length;
-    float *tone; 
-
+    Oscillator osc; 
 
     MyAudioCallback() {
         cout << "CONSTRUCTOR" << endl;
-        Oscillator osc = Oscillator(FREQUENCY, WAVEFORM::SINE);
-        ToneGenerator toneGenerator;
-        tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
-        length = get<1>(toneTuple);
-        tone = get<0>(toneTuple);
+        osc = Oscillator(FREQUENCY, WAVEFORM::SINE);
     }
 
 
@@ -52,25 +45,12 @@ public:
         {
             for (int channel = 0; channel < numOutputChannels; ++channel)
             {
-                // Get a pointer to the output channel data
                 float *outputChannel = outputChannelData[channel];
-                int samplesRemaining = numSamples;
-                while (samplesRemaining > 0)
+
+                for (int sample = 0; sample < numSamples; ++sample)
                 {
-                    // Calculate the number of samples to copy in this iteration
-                    int samplesToCopy = std::min(samplesRemaining, length - currentPosition);
-
-                    // Copy the samples from the audio array to the output buffer
-                    std::memcpy(outputChannel, tone + currentPosition, samplesToCopy * sizeof(float));
-
-                    // Update the current position and wrap around if needed
-                    currentPosition += samplesToCopy;
-
-                    // Update the number of remaining samples to copy
-                    samplesRemaining -= samplesToCopy;
-
-                    // Move the output buffer pointer to the next position
-                    outputChannel += samplesToCopy;
+                    float sampleValue = osc.getSample();
+                    outputChannel[sample] = sampleValue;
                 }
             }
         }

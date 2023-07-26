@@ -12,6 +12,7 @@ class Oscillator {
         double frequencyToPhaseIncrement(int);
 
     public:
+        Oscillator();
         Oscillator(int, WAVEFORM);
         float getSample();
 };
