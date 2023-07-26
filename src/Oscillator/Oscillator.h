@@ -13,7 +13,7 @@ class Oscillator {
 
     public:
         Oscillator(int, WAVEFORM);
-        double getSample();
+        float getSample();
 };
 
 #endif

@@ -27,6 +27,11 @@ class MyAudioCallback : public juce::AudioIODeviceCallback
 public:
     int currentPosition = 0;
 
+
+    // std::cout << "sample rate = " << SAMPLE_RATE << endl;
+    // std::cout << "amplitude = " << AMPLITUDE << endl;
+    // std::cout << "audioData" << &audioData << endl;
+
     void audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
                                           int numInputChannels,
                                           float *const *outputChannelData,
@@ -97,13 +102,11 @@ int main () {
 
     Oscillator osc = Oscillator(440, WAVEFORM::SINE);
     ToneGenerator toneGenerator;
-    tuple<float*, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
+    tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
     int length = get<1>(toneTuple);
-    float* tone =  get<0>(toneTuple);
-    const float* const* audioData = new const float*{tone};
-    float *const *outputChannelData = new float*{};
-
-    cout << "audioData" << &audioData << endl;
+    float *tone = get<0>(toneTuple);
+    const float *const *audioData = new const float *{tone};
+    float *const *outputChannelData = new float *{};
 
     // print some samples
     // cout << "tone array size = " << length << endl;

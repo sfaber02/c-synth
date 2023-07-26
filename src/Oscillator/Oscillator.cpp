@@ -7,7 +7,7 @@
 using namespace std;
 
 Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
-    // cout << "Oscillator created. " << frequency << "hz, " << waveform << endl;
+    cout << "Oscillator created. " << frequency << "hz, " << waveform << endl;
     // cout << "SINE = " << WAVEFORM::SINE << endl;
     phase = 0.0;
     phaseIncrement = frequencyToPhaseIncrement(frequency);
@@ -19,8 +19,8 @@ double Oscillator::frequencyToPhaseIncrement(int frequency) {
     return 2 * M_1_PI * frequency / SAMPLE_RATE;
 };
 
-double Oscillator::getSample() {
-    double sample;
+float Oscillator::getSample() {
+    float sample;
     // cout << "get sample called. Phase = " << phase << " sin(phase) = " << sample << endl;
     
     switch (wf) {

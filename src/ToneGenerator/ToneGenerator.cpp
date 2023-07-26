@@ -23,7 +23,7 @@ tuple<float*, int> ToneGenerator::generateTone(
         
         for (int index = 0; index < length; index++) {
             // cout << "index = " << index << endl;
-            double sample = osc.getSample() * amplitude;
+            float sample = osc.getSample() * amplitude;
             // cout << "sample = " << sample << endl;
             *(tone + index) = sample;
             tone[index] = sample;
