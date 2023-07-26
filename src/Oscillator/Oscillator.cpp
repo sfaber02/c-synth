@@ -31,10 +31,12 @@ float Oscillator::getSample() {
             break;
     }
 
+
+
     phase += phaseIncrement;
     
-    if (phase >= 2 * M_1_PI) {
-        phase -= 2 * M_1_PI;
+    if (phase >= 2 * M_PI) {
+        phase -= 2 * M_PI;
     }
 
 

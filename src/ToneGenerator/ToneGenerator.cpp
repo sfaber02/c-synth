@@ -19,13 +19,13 @@ tuple<float*, int> ToneGenerator::generateTone(
 
 
 
-        float* tone = new float[length];
+        float* tone = new float[length]; //TODO: definitely a memory leak here, we never free this memory
         
         for (int index = 0; index < length; index++) {
             // cout << "index = " << index << endl;
             float sample = osc.getSample() * amplitude;
             // cout << "sample = " << sample << endl;
-            *(tone + index) = sample;
+            // *(tone + index) = sample;
             tone[index] = sample;
             // cout << "array entry = " << *(tone + index) << endl;
         }

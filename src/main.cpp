@@ -26,11 +26,19 @@ class MyAudioCallback : public juce::AudioIODeviceCallback
 {
 public:
     int currentPosition = 0;
+    int length;
+    float *tone; 
 
 
-    // std::cout << "sample rate = " << SAMPLE_RATE << endl;
-    // std::cout << "amplitude = " << AMPLITUDE << endl;
-    // std::cout << "audioData" << &audioData << endl;
+    MyAudioCallback() {
+        cout << "CONSTRUCTOR" << endl;
+        Oscillator osc = Oscillator(FREQUENCY, WAVEFORM::SINE);
+        ToneGenerator toneGenerator;
+        tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
+        length = get<1>(toneTuple);
+        tone = get<0>(toneTuple);
+    }
+
 
     void audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
                                           int numInputChannels,
@@ -39,20 +47,7 @@ public:
                                           int numSamples,
                                           const AudioIODeviceCallbackContext &context) override
     {
-        cout <<  "current Position = " << currentPosition << endl;
-        // cout << "We're in the overidden function!!!!" << endl;
-        // Fill the outputChannelData with audio data for each output channel
-        // You can generate audio here, process audio from input, or mix multiple tracks.
-        // OutputChannelData[channelIndex][sampleIndex]
-        Oscillator osc = Oscillator(440, WAVEFORM::SINE);
-        ToneGenerator toneGenerator;
-        tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
-        int length = get<1>(toneTuple);
-        float *tone = get<0>(toneTuple);
-        // outputChannelData[0] = *tone;
-        // float *const *outputChannelData = new float *{};
 
-        // // some chat gpt insanity
         if (numOutputChannels > 0)
         {
             for (int channel = 0; channel < numOutputChannels; ++channel)
@@ -100,13 +95,13 @@ int main () {
     cout << "sample rate = " << SAMPLE_RATE <<  endl;
     cout << "amplitude = " << AMPLITUDE << endl;
 
-    Oscillator osc = Oscillator(440, WAVEFORM::SINE);
-    ToneGenerator toneGenerator;
-    tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
-    int length = get<1>(toneTuple);
-    float *tone = get<0>(toneTuple);
-    const float *const *audioData = new const float *{tone};
-    float *const *outputChannelData = new float *{};
+    // Oscillator osc = Oscillator(440, WAVEFORM::SINE);
+    // ToneGenerator toneGenerator;
+    // tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
+    // int length = get<1>(toneTuple);
+    // float *tone = get<0>(toneTuple);
+    // const float *const *audioData = new const float *{tone};
+    // float *const *outputChannelData = new float *{};
 
     // print some samples
     // cout << "tone array size = " << length << endl;
@@ -131,40 +126,20 @@ int main () {
     cout << "sampleRate" << audioDeviceSetup.sampleRate << endl;
     cout << "Buffer Size " << audioDeviceSetup.bufferSize << endl;
 
-    
-
     audioDevice->open(0, 1, 48000, 512);
     cout << "Audio device open? " << audioDevice->isOpen() << endl;
-
-
-    
-    // AudioIODeviceCallback* audioIODeviceCallback;
-
 
     MyAudioCallback myAudioCallBack = MyAudioCallback();
     audioDeviceManager.addAudioCallback(&myAudioCallBack);
     audioDevice->start(&myAudioCallBack);
     cout << "Is playing ? " << audioDevice->isPlaying() << endl;
 
-    // AudioIODeviceCallbackContext context;
-    // try  {
-    //     audioIODeviceCallback->audioDeviceIOCallbackWithContext(audioData, 1, outputChannelData, 0, 512.0, context);
-    // } catch (const char *msg) {
-    //     cout << "exception = " << endl;
-    // }
-
-    // try {
-    //     
-    // } catch (const char *msg) {
-    //     cout << "exception on adding callback" << endl;
-    // }
-
     std::cin.get();
 
     audioDevice->close();
     cout << "Audio device open:  " << audioDevice->isOpen() << endl;
 
-    delete[] tone;
+    // delete[] tone;
 
 
 }
