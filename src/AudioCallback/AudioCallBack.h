@@ -23,6 +23,9 @@ class MyAudioCallback : public juce::AudioIODeviceCallback
     private:
         Oscillator osc;
         Oscillator osc2;
+        Oscillator osc3;
+        Oscillator osc4;
+        Oscillator osc5;
 
 };
 
