@@ -6,8 +6,8 @@
 
 using namespace std;
 
+//default constructor
 Oscillator::Oscillator() {
-    // Initialize member variables to default values
     phase = 0.0;
     phaseIncrement = 0.0;
     wf = WAVEFORM::SINE; // Set default waveform to SINE or any other appropriate value
@@ -15,11 +15,8 @@ Oscillator::Oscillator() {
 
 Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
     cout << "Oscillator created. " << frequency << "hz, " << waveform << endl;
-    // cout << "SINE = " << WAVEFORM::SINE << endl;
-    phase = 0.0;
     phaseIncrement = frequencyToPhaseIncrement(frequency);
     wf = waveform;
-    // cout << "Phase Increment = " << phaseIncrement << endl;
 };
 
 double Oscillator::frequencyToPhaseIncrement(int frequency) {

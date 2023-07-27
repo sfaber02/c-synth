@@ -1,23 +1,49 @@
-#include <AudioCallBack.h>
 
-class MyAudioCallback : public juce::AudioIODeviceCallback
+
+#include "./AudioCallBack.h"
+#include <juce_core/juce_core.h>
+#include <juce_audio_devices/juce_audio_devices.h>
+#include ".././Oscillator/Oscillator.h"
+#include "../globals.cpp"
+
+
+MyAudioCallback::MyAudioCallback()
 {
-public:
-    void audioDeviceIOCallback(const float **inputChannelData, int numInputChannels,
-                               float **outputChannelData, int numOutputChannels, int numSamples) override
-    {
-        // Fill the outputChannelData with audio data for each output channel
-        // You can generate audio here, process audio from input, or mix multiple tracks.
-        // OutputChannelData[channelIndex][sampleIndex]
-    }
+    cout << "CONSTRUCTOR" << endl;
+    osc = Oscillator(FREQUENCY, WAVEFORM::SINE);
+}
 
-    void audioDeviceAboutToStart(juce::AudioIODevice *device) override
-    {
-        // Called when the audio device is about to start.
-    }
+void MyAudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
+                                                       int numInputChannels,
+                                                       float *const *outputChannelData,
+                                                       int numOutputChannels,
+                                                       int numSamples,
+                                                       const juce::AudioIODeviceCallbackContext &context)
+{
 
-    void audioDeviceStopped() override
+    if (numOutputChannels > 0)
     {
-        // Called when the audio device has stopped.
+        for (int channel = 0; channel < numOutputChannels; ++channel)
+        {
+            float *outputChannel = outputChannelData[channel];
+
+            for (int sample = 0; sample < numSamples; ++sample)
+            {
+                float sampleValue = osc.getSample();
+                outputChannel[sample] = sampleValue;
+            }
+        }
     }
-};
+}
+
+void MyAudioCallback::audioDeviceAboutToStart(juce::AudioIODevice *device)
+{
+    cout << "AUDIO DEVICE IS ABOUT TO START" << endl;
+    // Called when the audio device is about to start.
+}
+
+void MyAudioCallback::audioDeviceStopped()
+{
+    cout << "STOPPING AUDIO DEVICE" << endl;
+    // Called when the audio device has stopped.
+}

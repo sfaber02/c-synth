@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(./JUCE)
 add_subdirectory(./src/Oscillator)
 add_subdirectory(./src/ToneGenerator)
+add_subdirectory(./src/AudioCallBack)
 
 # add_executable(${PROJECT_NAME} ./src/main.cpp)
 juce_add_console_app(${PROJECT_NAME} PRODUCT_NAME "TEST")
@@ -19,14 +20,11 @@ target_compile_definitions(${PROJECT_NAME}
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_console_app` call
         JUCE_USE_CURL=0)
 
-
-
-# target_link_libraries(${PROJECT_NAME} Oscillator)
-# target_link_libraries(${PROJECT_NAME} ToneGenerator)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Oscillator
         ToneGenerator
+        AudioCallBack
         # ConsoleAppData            # If you'd created a binary data target, you'd link to it here
         juce::juce_core
         juce::juce_audio_devices

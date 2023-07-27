@@ -2,6 +2,7 @@
 #define OSCILLATOR_H
 
 #include <string>
+#include "../globals.cpp"
 
 using namespace std;
 class Oscillator {

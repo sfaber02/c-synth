@@ -4,93 +4,18 @@
 #include <tuple>
 #include "./Oscillator/Oscillator.h"
 #include "./ToneGenerator/ToneGenerator.h"
+#include "./AudioCallBack/AudioCallBack.h"
 #include <juce_core/juce_core.h>
 #include <juce_audio_devices/juce_audio_devices.h>
-// #include <juce_audio_devices/audio_io/juce_AudioDeviceManager.h>
 
 using namespace juce;
 
-// // void audioCallBack(const float **inputArray, int inChannels, float **outputArray, int outChannels, int numSamples) {
-// void audioCallBack(const float *const *inputChannelData,
-//                    int totalNumInputChannels,
-//                    float *const *outputChannelData,
-//                    int totalNumOutputChannels,
-//                    int numSamples,
-//                    const AudioIODeviceCallbackContext &context){
 
-// };
-
-#ifndef MYAUDIOCALLBACK_H_INCLUDED
-#define MYAUDIOCALLBACK_H_INCLUDED
-class MyAudioCallback : public juce::AudioIODeviceCallback
-{
-public:
-    Oscillator osc; 
-
-    MyAudioCallback() {
-        cout << "CONSTRUCTOR" << endl;
-        osc = Oscillator(FREQUENCY, WAVEFORM::SINE);
-    }
-
-
-    void audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
-                                          int numInputChannels,
-                                          float *const *outputChannelData,
-                                          int numOutputChannels,
-                                          int numSamples,
-                                          const AudioIODeviceCallbackContext &context) override
-    {
-
-        if (numOutputChannels > 0)
-        {
-            for (int channel = 0; channel < numOutputChannels; ++channel)
-            {
-                float *outputChannel = outputChannelData[channel];
-
-                for (int sample = 0; sample < numSamples; ++sample)
-                {
-                    float sampleValue = osc.getSample();
-                    outputChannel[sample] = sampleValue;
-                }
-            }
-        }
-    }
-
-    void audioDeviceAboutToStart(juce::AudioIODevice *device) override
-    {
-        cout << "AUDIO DEVICE IS ABOUT TO START" << endl;
-        // Called when the audio device is about to start.
-    }
-
-    void audioDeviceStopped() override
-    {
-        cout << "STOPPING AUDIO DEVICE" << endl;
-        // Called when the audio device has stopped.
-    }
-};
-
-#endif
 
 int main () {
     cout << "sample rate = " << SAMPLE_RATE <<  endl;
     cout << "amplitude = " << AMPLITUDE << endl;
-
-    // Oscillator osc = Oscillator(440, WAVEFORM::SINE);
-    // ToneGenerator toneGenerator;
-    // tuple<float *, int> toneTuple = toneGenerator.generateTone(DURATION, FREQUENCY, AMPLITUDE, osc);
-    // int length = get<1>(toneTuple);
-    // float *tone = get<0>(toneTuple);
-    // const float *const *audioData = new const float *{tone};
-    // float *const *outputChannelData = new float *{};
-
-    // print some samples
-    // cout << "tone array size = " << length << endl;
-    // for (int index = 0; index < 200; index++) {
-    //      cout << *(tone + index) << ",";    
-    // }
-    // cout << "audio data" << *(audioData)[0] << ",";    
-
-
+    
     // create audio device manager
     juce::AudioDeviceManager audioDeviceManager;
     //init audio device with default params
@@ -111,13 +36,13 @@ int main () {
 
     MyAudioCallback myAudioCallBack = MyAudioCallback();
     audioDeviceManager.addAudioCallback(&myAudioCallBack);
+
+
     audioDevice->start(&myAudioCallBack);
-    cout << "Is playing ? " << audioDevice->isPlaying() << endl;
 
     std::cin.get();
 
     audioDevice->close();
-    cout << "Audio device open:  " << audioDevice->isOpen() << endl;
 
     // delete[] tone;
 
