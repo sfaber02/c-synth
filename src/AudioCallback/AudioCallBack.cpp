@@ -6,8 +6,7 @@
 #include ".././Oscillator/Oscillator.h"
 #include "../globals.cpp"
 
-
-MyAudioCallback::MyAudioCallback()
+AudioCallback::AudioCallback()
 {
     cout << "CONSTRUCTOR" << endl;
     osc = Oscillator(600, WAVEFORM::SINE);
@@ -15,16 +14,14 @@ MyAudioCallback::MyAudioCallback()
     osc3 = Oscillator(1440.0, WAVEFORM::SINE);
     osc4 = Oscillator(100.0, WAVEFORM::SINE);
     osc5 = Oscillator(3000.0, WAVEFORM::SINE);
-    
-    
 }
 
-void MyAudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
-                                                       int numInputChannels,
-                                                       float *const *outputChannelData,
-                                                       int numOutputChannels,
-                                                       int numSamples,
-                                                       const juce::AudioIODeviceCallbackContext &context)
+void AudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
+                                                     int numInputChannels,
+                                                     float *const *outputChannelData,
+                                                     int numOutputChannels,
+                                                     int numSamples,
+                                                     const juce::AudioIODeviceCallbackContext &context)
 {
 
     if (numOutputChannels > 0)
@@ -42,13 +39,13 @@ void MyAudioCallback::audioDeviceIOCallbackWithContext(const float *const *input
     }
 }
 
-void MyAudioCallback::audioDeviceAboutToStart(juce::AudioIODevice *device)
+void AudioCallback::audioDeviceAboutToStart(juce::AudioIODevice *device)
 {
     cout << "AUDIO DEVICE IS ABOUT TO START" << endl;
     // Called when the audio device is about to start.
 }
 
-void MyAudioCallback::audioDeviceStopped()
+void AudioCallback::audioDeviceStopped()
 {
     cout << "STOPPING AUDIO DEVICE" << endl;
     // Called when the audio device has stopped.

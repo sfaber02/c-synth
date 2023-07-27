@@ -10,15 +10,14 @@
 
 using namespace juce;
 
-
-
-int main () {
-    cout << "sample rate = " << SAMPLE_RATE <<  endl;
+int main()
+{
+    cout << "sample rate = " << SAMPLE_RATE << endl;
     cout << "amplitude = " << AMPLITUDE << endl;
-    
+
     // create audio device manager
     juce::AudioDeviceManager audioDeviceManager;
-    //init audio device with default params
+    // init audio device with default params
     audioDeviceManager.initialiseWithDefaultDevices(0, 1);
     // this is a pointer to the actual audio device
     juce::AudioIODevice *audioDevice = audioDeviceManager.getCurrentAudioDevice();
@@ -34,19 +33,14 @@ int main () {
     audioDevice->open(0, 1, 48000, 512);
     cout << "Audio device open? " << audioDevice->isOpen() << endl;
 
-    MyAudioCallback myAudioCallBack = MyAudioCallback();
-    audioDeviceManager.addAudioCallback(&myAudioCallBack);
+    AudioCallback audioCallback = AudioCallback();
+    audioDeviceManager.addAudioCallback(&audioCallback);
 
-
-    audioDevice->start(&myAudioCallBack);
+    audioDevice->start(&audioCallback);
 
     std::cin.get();
 
     audioDevice->close();
 
     // delete[] tone;
-
-
 }
-
-
