@@ -22,6 +22,7 @@ class MyAudioCallback : public juce::AudioIODeviceCallback
         void audioDeviceStopped() override;
     private:
         Oscillator osc;
+        Oscillator osc2;
 
 };
 

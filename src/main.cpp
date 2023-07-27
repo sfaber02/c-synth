@@ -4,7 +4,7 @@
 #include <tuple>
 #include "./Oscillator/Oscillator.h"
 #include "./ToneGenerator/ToneGenerator.h"
-#include "./AudioCallBack/AudioCallBack.h"
+#include "./AudioCallback/AudioCallBack.h"
 #include <juce_core/juce_core.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 
