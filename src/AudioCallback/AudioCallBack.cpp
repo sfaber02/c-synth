@@ -4,6 +4,7 @@
 #include <juce_core/juce_core.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 #include ".././Oscillator/Oscillator.h"
+#include ".././Envelope/Envelope.h"
 #include "../globals.cpp"
 
 AudioCallback::AudioCallback()
@@ -11,6 +12,8 @@ AudioCallback::AudioCallback()
     osc = Oscillator(110.0, WAVEFORM::SINE);
     osc2 = Oscillator(523.25, WAVEFORM::SINE);
     osc3 = Oscillator(329.63, WAVEFORM::SINE);
+    env = Envelope();
+    env.noteOn();
 }
 
 void AudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
@@ -29,7 +32,7 @@ void AudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputCh
 
             for (int sample = 0; sample < numSamples; ++sample)
             {
-                float sampleValue = osc.getSample() + osc2.getSample() + osc3.getSample();
+                float sampleValue = (osc.getSample() + osc2.getSample() + osc3.getSample()) * env.getSample();
                 outputChannel[sample] = sampleValue;
             }
         }

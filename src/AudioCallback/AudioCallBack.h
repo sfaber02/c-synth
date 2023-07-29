@@ -4,6 +4,7 @@
 #include <juce_core/juce_core.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 #include ".././Oscillator/Oscillator.h"
+#include ".././Envelope/Envelope.h"
 #include "../globals.cpp"
 
 class AudioCallback : public juce::AudioIODeviceCallback
@@ -24,6 +25,7 @@ private:
     Oscillator osc;
     Oscillator osc2;
     Oscillator osc3;
+    Envelope env;
 };
 
 #endif

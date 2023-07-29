@@ -8,6 +8,7 @@ add_subdirectory(./JUCE)
 add_subdirectory(./src/Oscillator)
 add_subdirectory(./src/ToneGenerator)
 add_subdirectory(./src/AudioCallBack)
+add_subdirectory(./src/Envelope)
 
 # add_executable(${PROJECT_NAME} ./src/main.cpp)
 juce_add_console_app(${PROJECT_NAME} PRODUCT_NAME "TEST")
@@ -24,6 +25,7 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Oscillator
         ToneGenerator
+        Envelope
         AudioCallBack
         # ConsoleAppData            # If you'd created a binary data target, you'd link to it here
         juce::juce_core
