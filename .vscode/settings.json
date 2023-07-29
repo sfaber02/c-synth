@@ -80,5 +80,6 @@
         "typeindex": "cpp",
         "unordered_set": "cpp",
         "numeric": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

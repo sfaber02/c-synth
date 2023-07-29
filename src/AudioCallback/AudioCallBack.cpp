@@ -8,12 +8,9 @@
 
 AudioCallback::AudioCallback()
 {
-    cout << "CONSTRUCTOR" << endl;
-    osc = Oscillator(600, WAVEFORM::SINE);
-    osc2 = Oscillator(440.0, WAVEFORM::SINE);
-    osc3 = Oscillator(1440.0, WAVEFORM::SINE);
-    osc4 = Oscillator(100.0, WAVEFORM::SINE);
-    osc5 = Oscillator(3000.0, WAVEFORM::SINE);
+    osc = Oscillator(110.0, WAVEFORM::SINE);
+    osc2 = Oscillator(523.25, WAVEFORM::SINE);
+    osc3 = Oscillator(329.63, WAVEFORM::SINE);
 }
 
 void AudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputChannelData,
@@ -32,7 +29,7 @@ void AudioCallback::audioDeviceIOCallbackWithContext(const float *const *inputCh
 
             for (int sample = 0; sample < numSamples; ++sample)
             {
-                float sampleValue = osc.getSample() + osc2.getSample() + osc3.getSample() + osc4.getSample() + osc5.getSample();
+                float sampleValue = osc.getSample() + osc2.getSample() + osc3.getSample();
                 outputChannel[sample] = sampleValue;
             }
         }

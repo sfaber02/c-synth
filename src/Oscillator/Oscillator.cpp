@@ -10,7 +10,7 @@ using namespace std;
 Oscillator::Oscillator() {
     phase = 0.0;
     phaseIncrement = 0.0;
-    wf = WAVEFORM::SINE; // Set default waveform to SINE or any other appropriate value
+    wf = WAVEFORM::SINE;
 }
 
 Oscillator::Oscillator(int frequency, WAVEFORM waveform) {
