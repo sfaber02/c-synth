@@ -11,7 +11,7 @@ AudioCallback::AudioCallback()
 {
     osc = Oscillator(110.0, WAVEFORM::SINE);
     osc2 = Oscillator(523.25, WAVEFORM::SINE);
-    osc3 = Oscillator(329.63, WAVEFORM::SINE);
+    osc3 = Oscillator(3229.63, WAVEFORM::SINE);
     env = Envelope();
     env.noteOn();
 }

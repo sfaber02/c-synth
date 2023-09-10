@@ -18,7 +18,8 @@ int main()
     // create audio device manager
     juce::AudioDeviceManager audioDeviceManager;
     // init audio device with default params
-    audioDeviceManager.initialiseWithDefaultDevices(0, 1);
+    // audioDeviceManager.initialiseWithDefaultDevices(0, 2);
+    audioDeviceManager.initialise(0, 2, nullptr, true);
     // this is a pointer to the actual audio device
     juce::AudioIODevice *audioDevice = audioDeviceManager.getCurrentAudioDevice();
     // get audio device setup for logging
@@ -30,7 +31,7 @@ int main()
     cout << "sampleRate" << audioDeviceSetup.sampleRate << endl;
     cout << "Buffer Size " << audioDeviceSetup.bufferSize << endl;
 
-    audioDevice->open(0, 1, 48000, 512);
+    audioDevice->open(0, 2, 48000, 512);
     cout << "Audio device open? " << audioDevice->isOpen() << endl;
 
     AudioCallback audioCallback = AudioCallback();

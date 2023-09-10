@@ -32,6 +32,5 @@ float Envelope::getSample() {
         default:
             break;
     }
-    // std::cout << "value = " << value << std::endl;
     return value;
 }
